@@ -4,9 +4,7 @@ import { useState, useEffect, useCallback } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { createClient } from '@/lib/supabase/client'
-
-const RESERVED_WORDS = ['api', 'admin', 'dashboard', 'vault', 'discover', 'login', 'signup', 'settings', 'profile', 'privacy', 'demo']
-const USERNAME_REGEX = /^[a-z0-9-]{3,30}$/
+import { RESERVED_USERNAMES, USERNAME_REGEX } from '@/lib/constants/username'
 
 export default function SignupPage() {
   const router = useRouter()
@@ -22,7 +20,7 @@ export default function SignupPage() {
 
   const checkUsername = useCallback(async (val: string) => {
     if (!val) { setUsernameStatus('idle'); return }
-    if (!USERNAME_REGEX.test(val) || RESERVED_WORDS.includes(val)) {
+    if (!USERNAME_REGEX.test(val) || RESERVED_USERNAMES.includes(val)) {
       setUsernameStatus('invalid')
       return
     }
