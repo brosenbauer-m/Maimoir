@@ -110,11 +110,15 @@ export async function generateNotifications(userId: string): Promise<void> {
 
     if (userData && process.env.RESEND_API_KEY) {
       try {
+        const { data: authUser } = await supabase.auth.admin.getUserById(userId)
+        const userEmail = authUser?.user?.email
+        if (!userEmail) throw new Error('No email found for user')
+
         const { Resend } = await import('resend')
         const resend = new Resend(process.env.RESEND_API_KEY)
         await resend.emails.send({
           from: 'Maimoir <noreply@maimoir.app>',
-          to: userId, // In production, fetch actual email
+          to: userEmail,
           subject: 'Your Maimoir has some questions for you 👋',
           html: `<h2>Hi ${userData.display_name}!</h2><p>Your Maimoir has ${notifications.length} update${notifications.length > 1 ? 's' : ''} for you.</p><ul>${notifications.map(n => `<li>${n.message}</li>`).join('')}</ul><p><a href="${process.env.NEXT_PUBLIC_APP_URL}/dashboard">View your dashboard</a></p>`,
         })
