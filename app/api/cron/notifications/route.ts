@@ -28,7 +28,7 @@ export async function GET(request: NextRequest) {
     try {
       await generateNotifications(user.id)
       results.push({ userId: user.id, status: 'ok' })
-    } catch (e) {
+    } catch {
       results.push({ userId: user.id, status: 'error' })
     }
   }

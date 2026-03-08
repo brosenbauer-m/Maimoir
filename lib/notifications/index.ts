@@ -1,5 +1,4 @@
 import { createServiceClient } from '@/lib/supabase/service'
-import { anthropic, FAST_MODEL } from '@/lib/anthropic/client'
 import type { VaultSection, VisitorQueryLog, Notification } from '@/types'
 
 const SENSITIVE_PATTERNS = [

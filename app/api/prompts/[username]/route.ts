@@ -75,5 +75,5 @@ export async function GET(
     prompts.push(`What would ${name} like me to know about them?`)
   }
 
-  return NextResponse.json({ prompts: [...new Set(prompts)].slice(0, 4) })
+  return NextResponse.json({ prompts: Array.from(new Set(prompts)).slice(0, 4) })
 }

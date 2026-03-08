@@ -19,7 +19,7 @@ async function extractKeywords(query: string): Promise<string[]> {
     })
     const content = response.content[0]
     if (content.type === 'text') {
-      const match = content.text.match(/\[.*\]/s)
+      const match = content.text.match(/\[[\s\S]*\]/)
       if (match) {
         const keywords = JSON.parse(match[0])
         return Array.isArray(keywords) ? keywords : []
@@ -76,7 +76,7 @@ export async function POST(request: NextRequest) {
   }
 
   // Get distinct user IDs sorted by match count
-  const sortedUserIds = [...userMatchCounts.entries()]
+  const sortedUserIds = Array.from(userMatchCounts.entries())
     .sort((a, b) => b[1] - a[1])
     .map(([id]) => id)
     .slice(0, 20)

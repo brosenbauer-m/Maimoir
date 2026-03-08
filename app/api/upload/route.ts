@@ -36,21 +36,22 @@ export async function POST(request: NextRequest) {
 
   try {
     if (file.type === 'application/pdf') {
-      const pdfParse = (await import('pdf-parse')).default
-      const result = await pdfParse(buffer)
+      const { PDFParse } = await import('pdf-parse')
+      const parser = new PDFParse({ data: buffer })
+      const result = await parser.getText()
       extractedText = result.text
     } else {
       const mammoth = await import('mammoth')
       const result = await mammoth.extractRawText({ buffer })
       extractedText = result.value
     }
-  } catch (err) {
+  } catch {
     return NextResponse.json({ error: 'Failed to parse file' }, { status: 500 })
   }
 
   // Upload to Supabase storage
   const fileName = `${user.id}/${Date.now()}-${file.name}`
-  const { data: uploadData, error: uploadError } = await serviceSupabase.storage
+  const { error: uploadError } = await serviceSupabase.storage
     .from('uploads')
     .upload(fileName, buffer, { contentType: file.type })
 

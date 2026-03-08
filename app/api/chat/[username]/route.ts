@@ -54,7 +54,7 @@ export async function POST(
     '127.0.0.1'
 
   const body = await request.json()
-  const { messages, visitorId } = body as { messages: ChatMessage[]; visitorId: string }
+  const { messages } = body as { messages: ChatMessage[]; visitorId: string }
 
   if (!messages || !Array.isArray(messages)) {
     return NextResponse.json({ error: 'Invalid request' }, { status: 400 })
@@ -93,8 +93,6 @@ export async function POST(
 
   const stream = new ReadableStream({
     async start(controller) {
-      let fullResponse = ''
-
       try {
         const anthropicStream = anthropic.messages.stream({
           model: CHAT_MODEL,
@@ -109,7 +107,6 @@ export async function POST(
             event.delta.type === 'text_delta'
           ) {
             const sanitized = sanitizeResponse(event.delta.text)
-            fullResponse += sanitized
             controller.enqueue(encoder.encode(sanitized))
           }
         }
