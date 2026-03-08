@@ -1,0 +1,31 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: #0f0f1a;
+  --foreground: #f1f5f9;
+  --surface: #1a1a2e;
+  --card: #16213e;
+  --accent: #7c3aed;
+  --accent-light: #a78bfa;
+  --accent-subtle: #1e1b4b;
+  --text-primary: #f1f5f9;
+  --text-secondary: #94a3b8;
+  --border: #2d2d4e;
+  --success: #10b981;
+  --warning: #f59e0b;
+  --error: #ef4444;
+}
+
+body {
+  color: var(--foreground);
+  background: var(--background);
+  font-family: 'Inter', system-ui, sans-serif;
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
