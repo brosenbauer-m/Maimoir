@@ -14,7 +14,7 @@ interface VaultSectionCardProps {
 function PrivacyBadge({ visibility }: { visibility: VaultVisibility }) {
   const config = {
     public: { color: 'bg-badge-public/10 text-badge-public border-badge-public/30', label: 'Public' },
-    discoverable: { color: 'bg-badge-discoverable/10 text-badge-discoverable border-badge-discoverable/30', label: 'Discoverable' },
+    discoverable_only: { color: 'bg-badge-discoverable/10 text-badge-discoverable border-badge-discoverable/30', label: 'Discoverable' },
     private: { color: 'bg-badge-private/10 text-badge-private border-badge-private/30', label: 'Private' },
   }
 
