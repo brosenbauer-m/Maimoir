@@ -23,8 +23,10 @@ export default function NotificationsPanel({ initialNotifications }: Props) {
 
   if (notifications.length === 0) {
     return (
-      <div className="bg-card border border-border rounded-xl p-8 text-center">
-        <p className="text-text-secondary">You&apos;re all caught up! ✨</p>
+      <div className="bg-card border border-border rounded-xl p-12 text-center shadow-soft">
+        <div className="text-5xl mb-4">✨</div>
+        <p className="text-text-secondary text-base">You&apos;re all caught up!</p>
+        <p className="text-text-muted text-sm mt-1">Check back later for new updates</p>
       </div>
     )
   }

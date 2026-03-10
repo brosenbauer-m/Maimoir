@@ -113,15 +113,15 @@ export default function VaultPage() {
       {/* Welcome Modal */}
       {showWelcome && (
         <div className="fixed inset-0 bg-black/70 flex items-center justify-center z-50 px-4">
-          <div className="bg-card border border-border rounded-2xl p-8 max-w-md w-full">
-            <div className="text-4xl mb-4">🎉</div>
+          <div className="bg-card border border-border rounded-xl p-8 max-w-md w-full shadow-card">
+            <div className="text-5xl mb-4">🎉</div>
             <h2 className="text-2xl font-bold text-text-primary mb-3">Welcome to your Vault!</h2>
-            <p className="text-text-secondary mb-6">
+            <p className="text-text-secondary text-base mb-6 leading-relaxed">
               This is where you feed your Maimoir. The more you add, the better it can represent you. Start with a few sections and build from there.
             </p>
             <button
               onClick={() => setShowWelcome(false)}
-              className="w-full py-3 bg-accent hover:bg-accent/90 text-white font-semibold rounded-lg transition-colors"
+              className="w-full py-3 bg-accent hover:bg-accent-light text-white font-semibold rounded-lg transition-all shadow-soft"
             >
               Let&apos;s go! →
             </button>
@@ -130,14 +130,14 @@ export default function VaultPage() {
       )}
 
       {/* Nav */}
-      <nav className="border-b border-border bg-surface/80 backdrop-blur-sm sticky top-0 z-40">
+      <nav className="border-b border-border bg-surface shadow-sm sticky top-0 z-40">
         <div className="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
-          <Link href="/dashboard" className="font-bold text-xl text-accent-light">Maimoir</Link>
-          <div className="flex items-center gap-4">
-            <Link href="/dashboard" className="text-text-secondary hover:text-text-primary text-sm transition-colors">Dashboard</Link>
+          <Link href="/dashboard" className="font-bold text-xl text-accent">Maimoir</Link>
+          <div className="flex items-center gap-6">
+            <Link href="/dashboard" className="text-text-secondary hover:text-accent text-sm font-medium transition-colors">Dashboard</Link>
             <button
               onClick={loadPreview}
-              className="text-text-secondary hover:text-text-primary text-sm transition-colors"
+              className="text-text-secondary hover:text-accent text-sm font-medium transition-colors"
             >
               Preview
             </button>
@@ -148,42 +148,42 @@ export default function VaultPage() {
       {/* Preview Panel */}
       {showPreview && (
         <div className="fixed inset-0 bg-black/70 flex items-end sm:items-center justify-center z-50 px-4">
-          <div className="bg-card border border-border rounded-2xl p-6 w-full max-w-2xl max-h-[80vh] flex flex-col">
+          <div className="bg-card border border-border rounded-xl p-6 w-full max-w-2xl max-h-[80vh] flex flex-col shadow-card">
             <div className="flex justify-between items-center mb-4">
-              <h3 className="font-semibold text-text-primary">Your Maimoir&apos;s knowledge preview</h3>
-              <button onClick={() => setShowPreview(false)} className="text-text-secondary hover:text-error">✕</button>
+              <h3 className="font-semibold text-text-primary text-lg">Your Maimoir&apos;s knowledge preview</h3>
+              <button onClick={() => setShowPreview(false)} className="text-text-secondary hover:text-error text-xl">✕</button>
             </div>
-            <p className="text-xs text-text-secondary mb-4">This is the information visible to your Maimoir (public + discoverable sections)</p>
-            <pre className="flex-1 overflow-y-auto text-xs text-text-secondary font-mono whitespace-pre-wrap bg-surface rounded-lg p-4">
+            <p className="text-sm text-text-secondary mb-4">This is the information visible to your Maimoir (public + discoverable sections)</p>
+            <pre className="flex-1 overflow-y-auto text-sm text-text-primary font-mono whitespace-pre-wrap bg-background rounded-lg p-4 border border-border">
               {previewContent}
             </pre>
           </div>
         </div>
       )}
 
-      <div className="max-w-4xl mx-auto px-4 py-8">
-        <div className="flex items-center justify-between mb-6">
+      <div className="max-w-4xl mx-auto px-4 py-12">
+        <div className="flex items-center justify-between mb-8">
           <div>
-            <h1 className="text-3xl font-bold text-text-primary">My Vault</h1>
-            <p className="text-text-secondary mt-1">Your Maimoir only knows what you put here</p>
+            <h1 className="text-4xl font-bold text-text-primary">My Vault</h1>
+            <p className="text-text-secondary text-lg mt-2">Your Maimoir only knows what you put here</p>
           </div>
           <button
             onClick={loadPreview}
-            className="px-4 py-2 border border-border hover:border-accent/50 text-text-secondary hover:text-text-primary text-sm rounded-lg transition-colors hidden sm:block"
+            className="px-5 py-2.5 border-2 border-border hover:border-accent text-text-primary hover:text-accent text-sm font-medium rounded-lg transition-all hidden sm:block"
           >
             Live Preview
           </button>
         </div>
 
         {/* Tabs */}
-        <div className="flex gap-1 mb-6 bg-surface rounded-lg p-1 w-fit">
+        <div className="flex gap-1 mb-8 bg-surface border border-border rounded-lg p-1 w-fit shadow-soft">
           {(['professional', 'personal'] as Tab[]).map(tab => (
             <button
               key={tab}
               onClick={() => setActiveTab(tab)}
-              className={`px-5 py-2 rounded-md text-sm font-medium transition-colors capitalize ${
+              className={`px-6 py-2.5 rounded-md text-sm font-medium transition-all capitalize ${
                 activeTab === tab
-                  ? 'bg-accent text-white'
+                  ? 'bg-accent text-white shadow-soft'
                   : 'text-text-secondary hover:text-text-primary'
               }`}
             >
@@ -193,7 +193,7 @@ export default function VaultPage() {
         </div>
 
         {/* Sections */}
-        <div className="space-y-4">
+        <div className="space-y-5">
           {filtered.map(section => (
             <VaultSectionCard
               key={section.id}
@@ -207,7 +207,7 @@ export default function VaultPage() {
         {/* Add custom section */}
         <button
           onClick={addCustomSection}
-          className="mt-6 w-full py-3 border border-dashed border-border hover:border-accent/50 text-text-secondary hover:text-text-primary rounded-xl text-sm transition-colors"
+          className="mt-6 w-full py-4 border-2 border-dashed border-border hover:border-accent hover:bg-accent-tint text-text-secondary hover:text-accent rounded-xl text-sm font-medium transition-all"
         >
           + Add Custom Section
         </button>

@@ -48,70 +48,70 @@ export default async function DashboardPage() {
   return (
     <div className="min-h-screen bg-background">
       {/* Navigation */}
-      <nav className="border-b border-border bg-surface/80 backdrop-blur-sm sticky top-0 z-40">
+      <nav className="border-b border-border bg-surface shadow-sm sticky top-0 z-40">
         <div className="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
-          <Link href="/" className="font-bold text-xl text-accent-light">Maimoir</Link>
-          <div className="flex items-center gap-4">
-            <Link href="/vault" className="text-text-secondary hover:text-text-primary text-sm transition-colors">Vault</Link>
-            <Link href="/profile" className="text-text-secondary hover:text-text-primary text-sm transition-colors">Profile</Link>
-            <Link href="/discover" className="text-text-secondary hover:text-text-primary text-sm transition-colors">Discover</Link>
-            <Link href="/settings" className="text-text-secondary hover:text-text-primary text-sm transition-colors">Settings</Link>
+          <Link href="/" className="font-bold text-xl text-accent">Maimoir</Link>
+          <div className="flex items-center gap-6">
+            <Link href="/vault" className="text-text-secondary hover:text-accent text-sm font-medium transition-colors">Vault</Link>
+            <Link href="/profile" className="text-text-secondary hover:text-accent text-sm font-medium transition-colors">Profile</Link>
+            <Link href="/discover" className="text-text-secondary hover:text-accent text-sm font-medium transition-colors">Discover</Link>
+            <Link href="/settings" className="text-text-secondary hover:text-accent text-sm font-medium transition-colors">Settings</Link>
           </div>
         </div>
       </nav>
 
-      <div className="max-w-6xl mx-auto px-4 py-8 space-y-8">
+      <div className="max-w-6xl mx-auto px-4 py-12 space-y-8">
         {/* Welcome */}
-        <div>
-          <h1 className="text-3xl font-bold text-text-primary">
-            Welcome back, {profile?.display_name?.split(' ')[0] ?? 'there'} 👋
+        <div className="mb-2">
+          <h1 className="text-4xl font-bold text-text-primary">
+            Welcome back, {profile?.display_name?.split(' ')[0] ?? 'there'}
           </h1>
-          <p className="text-text-secondary mt-1">Here&apos;s what&apos;s been happening with your Maimoir</p>
+          <p className="text-text-secondary text-lg mt-2">Here&apos;s what&apos;s been happening with your Maimoir</p>
         </div>
 
         {/* Share URL */}
-        <div className="bg-card border border-border rounded-xl p-5">
-          <p className="text-sm font-medium text-text-primary mb-3">Your Maimoir profile</p>
-          <div className="flex items-center gap-3">
-            <div className="flex-1 bg-surface border border-border rounded-lg px-3 py-2 text-sm text-text-secondary font-mono truncate">
+        <div className="bg-card border border-border rounded-xl p-6 shadow-soft">
+          <p className="text-base font-semibold text-text-primary mb-4">Your Maimoir profile</p>
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
+            <div className="flex-1 bg-background border border-border rounded-lg px-4 py-3 text-sm text-text-secondary font-mono truncate">
               {profileUrl}
             </div>
             <a
               href={`/${profile?.username}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="px-4 py-2 bg-accent hover:bg-accent/90 text-white text-sm rounded-lg transition-colors whitespace-nowrap"
+              className="px-6 py-3 bg-accent hover:bg-accent-light text-white text-sm font-medium rounded-lg transition-all shadow-soft hover:shadow-card whitespace-nowrap text-center"
             >
               View Profile
             </a>
           </div>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Notifications */}
-          <div className="lg:col-span-2 space-y-4">
+          <div className="lg:col-span-2 space-y-5">
             <h2 className="text-xl font-semibold text-text-primary">Notifications</h2>
             <NotificationsPanel initialNotifications={(notifications as Notification[] | null) ?? []} />
           </div>
 
           {/* Stats */}
-          <div className="space-y-4">
+          <div className="space-y-5">
             <h2 className="text-xl font-semibold text-text-primary">This week</h2>
-            <div className="bg-card border border-border rounded-xl p-5 space-y-4">
+            <div className="bg-card border border-border rounded-xl p-6 shadow-soft space-y-6">
               <div>
-                <p className="text-3xl font-bold text-accent-light">
+                <p className="text-4xl font-bold text-accent">
                   {queryLogs?.reduce((acc, q) => acc + (q.count ?? 0), 0) ?? 0}
                 </p>
-                <p className="text-sm text-text-secondary">Visitor conversations</p>
+                <p className="text-sm text-text-secondary mt-1">Visitor conversations</p>
               </div>
               {queryLogs && queryLogs.length > 0 && (
                 <div>
-                  <p className="text-sm font-medium text-text-primary mb-2">Top topics asked</p>
-                  <div className="space-y-1.5">
+                  <p className="text-sm font-semibold text-text-primary mb-3">Top topics asked</p>
+                  <div className="space-y-2">
                     {queryLogs.slice(0, 3).map((q, i) => (
                       <div key={i} className="flex justify-between items-center text-sm">
                         <span className="text-text-secondary">{q.topic_cluster}</span>
-                        <span className="text-accent-light font-medium">{q.count}</span>
+                        <span className="text-accent font-semibold">{q.count}</span>
                       </div>
                     ))}
                   </div>
@@ -122,13 +122,13 @@ export default async function DashboardPage() {
             <div className="flex gap-3">
               <Link
                 href="/vault"
-                className="flex-1 text-center py-2.5 bg-accent hover:bg-accent/90 text-white text-sm font-medium rounded-lg transition-colors"
+                className="flex-1 text-center py-3 bg-accent hover:bg-accent-light text-white text-sm font-medium rounded-lg transition-all shadow-soft"
               >
                 Edit Vault
               </Link>
               <Link
                 href="/profile"
-                className="flex-1 text-center py-2.5 border border-border hover:border-accent/50 text-text-secondary hover:text-text-primary text-sm font-medium rounded-lg transition-colors"
+                className="flex-1 text-center py-3 border-2 border-border hover:border-accent text-text-primary hover:text-accent text-sm font-medium rounded-lg transition-all"
               >
                 Edit Profile
               </Link>
@@ -139,8 +139,8 @@ export default async function DashboardPage() {
         {/* Suggested Connections */}
         {suggestedUsers && suggestedUsers.length > 0 && (
           <div>
-            <h2 className="text-xl font-semibold text-text-primary mb-4">Suggested connections</h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+            <h2 className="text-xl font-semibold text-text-primary mb-5">Suggested connections</h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5">
               {(suggestedUsers as User[]).map(u => (
                 <ProfileCard key={u.id} user={u} />
               ))}
