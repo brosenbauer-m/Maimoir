@@ -9,7 +9,7 @@ export default function SuggestedPromptChip({ prompt, onClick }: SuggestedPrompt
   return (
     <button
       onClick={() => onClick(prompt)}
-      className="text-left px-3 py-2 rounded-lg border border-border bg-surface hover:border-accent/50 hover:bg-accent-subtle text-text-secondary hover:text-text-primary text-xs transition-colors"
+      className="text-left px-4 py-2 rounded-full border-2 border-accent/30 bg-accent-tint hover:bg-accent/10 text-text-primary text-sm transition-all hover:border-accent hover:shadow-soft"
     >
       {prompt}
     </button>
