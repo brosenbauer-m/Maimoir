@@ -36,10 +36,9 @@ export async function POST(request: NextRequest) {
 
   try {
     if (file.type === 'application/pdf') {
-      const { PDFParse } = await import('pdf-parse')
-      const parser = new PDFParse({ data: buffer })
-      const result = await parser.getText()
-      extractedText = result.text
+      const { extractText } = await import('unpdf')
+      const { text } = await extractText(new Uint8Array(buffer))
+      extractedText = text
     } else {
       const mammoth = await import('mammoth')
       const result = await mammoth.extractRawText({ buffer })
