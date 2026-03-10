@@ -6,6 +6,7 @@ import ContactLinks from '@/components/profile/ContactLinks'
 import TagChip from '@/components/ui/TagChip'
 import Link from 'next/link'
 import type { User, VaultSection } from '@/types'
+import ProfileHeader from '@/components/profile/ProfileHeader'
 
 interface Props {
   params: { username: string }
@@ -74,54 +75,42 @@ export default async function ProfilePage({ params }: Props) {
   return (
     <div className="min-h-screen bg-background">
       {/* Header */}
-      <nav className="border-b border-border bg-surface/60 backdrop-blur-sm">
-        <div className="max-w-6xl mx-auto px-4 h-14 flex items-center justify-between">
-          <Link href="/" className="font-bold text-lg text-accent-light">Maimoir</Link>
+      <nav className="border-b border-border bg-surface shadow-sm">
+        <div className="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
+          <Link href="/" className="font-bold text-xl text-accent">Maimoir</Link>
           <Link
             href="/signup"
-            className="px-4 py-1.5 bg-accent hover:bg-accent/90 text-white text-sm rounded-lg transition-colors"
+            className="px-5 py-2 bg-accent hover:bg-accent-light text-white text-sm font-medium rounded-lg transition-all shadow-soft hover:shadow-card"
           >
             Create yours →
           </Link>
         </div>
       </nav>
 
-      <div className="max-w-6xl mx-auto px-4 py-8">
+      <div className="max-w-6xl mx-auto px-4 py-12">
         <div className="grid grid-cols-1 lg:grid-cols-5 gap-8">
           {/* Left column: Profile info */}
-          <div className="lg:col-span-2 space-y-6">
-            {/* Avatar + Name */}
-            <div className="bg-card border border-border rounded-2xl p-6 text-center">
-              {user.avatar_url ? (
-                <img
-                  src={user.avatar_url}
-                  alt={user.display_name}
-                  className="w-24 h-24 rounded-full object-cover border-4 border-border mx-auto mb-4"
-                />
-              ) : (
-                <div className="w-24 h-24 rounded-full bg-accent-subtle flex items-center justify-center text-4xl font-bold text-accent-light border-4 border-border mx-auto mb-4">
-                  {user.display_name?.[0]?.toUpperCase() ?? '?'}
-                </div>
-              )}
-              <h1 className="text-2xl font-bold text-text-primary">{user.display_name}</h1>
-              {user.short_bio && (
-                <p className="text-text-secondary text-sm mt-2 leading-relaxed">{user.short_bio}</p>
-              )}
-            </div>
+          <div className="lg:col-span-2 space-y-5">
+            {/* Avatar + Name - with animation */}
+            <ProfileHeader
+              avatarUrl={user.avatar_url}
+              displayName={user.display_name}
+              shortBio={user.short_bio}
+            />
 
             {/* Contact links */}
             {user.contact_links && user.contact_links.length > 0 && (
-              <div className="bg-card border border-border rounded-2xl p-5">
-                <p className="text-xs text-text-secondary font-medium uppercase tracking-wide mb-3">Connect</p>
+              <div className="bg-card border border-border rounded-xl p-6 shadow-soft">
+                <p className="text-xs text-text-secondary font-semibold uppercase tracking-wide mb-3">Connect</p>
                 <ContactLinks links={user.contact_links} />
               </div>
             )}
 
             {/* Skills */}
             {skillTags.length > 0 && (
-              <div className="bg-card border border-border rounded-2xl p-5">
-                <p className="text-xs text-text-secondary font-medium uppercase tracking-wide mb-3">Skills</p>
-                <div className="flex flex-wrap gap-1.5">
+              <div className="bg-card border border-border rounded-xl p-6 shadow-soft">
+                <p className="text-xs text-text-secondary font-semibold uppercase tracking-wide mb-3">Skills</p>
+                <div className="flex flex-wrap gap-2">
                   {skillTags.map(tag => (
                     <TagChip key={tag} label={tag} variant="accent" />
                   ))}
@@ -131,9 +120,9 @@ export default async function ProfilePage({ params }: Props) {
 
             {/* Interests */}
             {hobbyTags.length > 0 && (
-              <div className="bg-card border border-border rounded-2xl p-5">
-                <p className="text-xs text-text-secondary font-medium uppercase tracking-wide mb-3">Interests</p>
-                <div className="flex flex-wrap gap-1.5">
+              <div className="bg-card border border-border rounded-xl p-6 shadow-soft">
+                <p className="text-xs text-text-secondary font-semibold uppercase tracking-wide mb-3">Interests</p>
+                <div className="flex flex-wrap gap-2">
                   {hobbyTags.map(tag => (
                     <TagChip key={tag} label={tag} />
                   ))}
@@ -146,9 +135,9 @@ export default async function ProfilePage({ params }: Props) {
               .filter(s => !['skills', 'hobbies'].includes(s.section_type) && s.content?.trim())
               .slice(0, 3)
               .map(section => (
-                <div key={section.id} className="bg-card border border-border rounded-2xl p-5">
-                  <p className="text-xs text-text-secondary font-medium uppercase tracking-wide mb-2">{section.label}</p>
-                  <p className="text-sm text-text-primary leading-relaxed line-clamp-3">{section.content}</p>
+                <div key={section.id} className="bg-card border border-border rounded-xl p-6 shadow-soft">
+                  <p className="text-xs text-text-secondary font-semibold uppercase tracking-wide mb-2">{section.label}</p>
+                  <p className="text-sm text-text-primary leading-relaxed line-clamp-4">{section.content}</p>
                 </div>
               ))}
           </div>

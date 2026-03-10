@@ -26,33 +26,33 @@ export default function SettingsPage() {
 
   return (
     <div className="min-h-screen bg-background">
-      <nav className="border-b border-border bg-surface/80 backdrop-blur-sm sticky top-0 z-40">
+      <nav className="border-b border-border bg-surface shadow-sm sticky top-0 z-40">
         <div className="max-w-4xl mx-auto px-4 h-16 flex items-center justify-between">
-          <Link href="/dashboard" className="font-bold text-xl text-accent-light">Maimoir</Link>
-          <Link href="/dashboard" className="text-text-secondary hover:text-text-primary text-sm transition-colors">← Dashboard</Link>
+          <Link href="/dashboard" className="font-bold text-xl text-accent">Maimoir</Link>
+          <Link href="/dashboard" className="text-text-secondary hover:text-accent text-sm font-medium transition-colors">← Dashboard</Link>
         </div>
       </nav>
 
-      <div className="max-w-2xl mx-auto px-4 py-8 space-y-6">
-        <h1 className="text-3xl font-bold text-text-primary">Settings</h1>
+      <div className="max-w-2xl mx-auto px-4 py-12 space-y-8">
+        <h1 className="text-4xl font-bold text-text-primary">Settings</h1>
 
-        <div className="bg-card border border-border rounded-xl p-6 space-y-4">
-          <h2 className="font-semibold text-text-primary">Account</h2>
+        <div className="bg-card border border-border rounded-xl p-8 space-y-5 shadow-soft">
+          <h2 className="font-semibold text-text-primary text-lg">Account</h2>
           <button
             onClick={handleSignOut}
-            className="w-full py-3 border border-border hover:border-accent/50 text-text-secondary hover:text-text-primary rounded-lg text-sm font-medium transition-colors"
+            className="w-full py-3 border-2 border-border hover:border-accent text-text-primary hover:text-accent rounded-lg text-sm font-medium transition-all"
           >
             Sign Out
           </button>
         </div>
 
-        <div className="bg-card border border-error/30 rounded-xl p-6 space-y-4">
-          <h2 className="font-semibold text-error">Danger Zone</h2>
-          <p className="text-sm text-text-secondary">Permanently delete your account and all associated data. This action cannot be undone.</p>
+        <div className="bg-card border-2 border-error/20 rounded-xl p-8 space-y-5 shadow-soft">
+          <h2 className="font-semibold text-error text-lg">Danger Zone</h2>
+          <p className="text-sm text-text-secondary leading-relaxed">Permanently delete your account and all associated data. This action cannot be undone.</p>
           <button
             onClick={handleDeleteAccount}
             disabled={deleting}
-            className="py-2.5 px-5 border border-error/50 text-error hover:bg-error/10 rounded-lg text-sm font-medium transition-colors disabled:opacity-50"
+            className="py-3 px-6 border-2 border-error text-error hover:bg-error/10 rounded-lg text-sm font-semibold transition-all disabled:opacity-50 shadow-soft"
           >
             {deleting ? 'Deleting...' : 'Delete Account'}
           </button>

@@ -10,6 +10,23 @@ interface VaultSectionCardProps {
   hint?: string
 }
 
+// Privacy badge component
+function PrivacyBadge({ visibility }: { visibility: VaultVisibility }) {
+  const config = {
+    public: { color: 'bg-badge-public/10 text-badge-public border-badge-public/30', label: 'Public' },
+    discoverable_only: { color: 'bg-badge-discoverable/10 text-badge-discoverable border-badge-discoverable/30', label: 'Discoverable' },
+    private: { color: 'bg-badge-private/10 text-badge-private border-badge-private/30', label: 'Private' },
+  }
+
+  const { color, label } = config[visibility]
+
+  return (
+    <span className={`inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium border ${color}`}>
+      {label}
+    </span>
+  )
+}
+
 export default function VaultSectionCard({ section, onUpdate, hint }: VaultSectionCardProps) {
   const [content, setContent] = useState(section.content)
   const [visibility, setVisibility] = useState<VaultVisibility>(section.visibility)
@@ -38,9 +55,12 @@ export default function VaultSectionCard({ section, onUpdate, hint }: VaultSecti
     : 'Never confirmed'
 
   return (
-    <div className="bg-card border border-border rounded-xl p-5 space-y-4">
+    <div className="bg-card border border-border rounded-xl p-6 space-y-4 shadow-soft">
       <div className="flex items-center justify-between gap-3 flex-wrap">
-        <h3 className="font-semibold text-text-primary">{section.label}</h3>
+        <div className="flex items-center gap-3">
+          <h3 className="font-semibold text-text-primary text-lg">{section.label}</h3>
+          <PrivacyBadge visibility={visibility} />
+        </div>
         <VisibilityToggle value={visibility} onChange={handleVisibilityChange} />
       </div>
 
@@ -49,27 +69,27 @@ export default function VaultSectionCard({ section, onUpdate, hint }: VaultSecti
         onChange={e => setContent(e.target.value)}
         placeholder={`Add information about your ${section.label.toLowerCase()}...`}
         rows={4}
-        className="w-full bg-surface border border-border rounded-lg px-3 py-2.5 text-sm text-text-primary placeholder:text-text-secondary focus:outline-none focus:border-accent/60 resize-y"
+        className="w-full bg-background border border-border rounded-lg px-4 py-3 text-sm text-text-primary placeholder:text-text-muted focus:outline-none focus:border-accent focus:ring-2 focus:ring-accent/20 resize-y transition-all"
       />
 
       {hint && (
-        <p className="text-xs text-text-secondary italic border-l-2 border-accent/30 pl-3">{hint}</p>
+        <p className="text-sm text-text-secondary italic border-l-2 border-accent pl-4">{hint}</p>
       )}
 
       <div className="flex items-center justify-between gap-3 flex-wrap">
-        <p className="text-xs text-text-secondary">Last confirmed: {lastConfirmed}</p>
+        <p className="text-xs text-text-muted">Last confirmed: {lastConfirmed}</p>
         <div className="flex gap-2">
           <button
             onClick={handleConfirm}
             disabled={confirming}
-            className="px-3 py-1.5 text-xs text-text-secondary border border-border rounded-lg hover:border-success/50 hover:text-success transition-colors disabled:opacity-50"
+            className="px-4 py-2 text-sm text-text-secondary border-2 border-border rounded-lg hover:border-success hover:text-success transition-all disabled:opacity-50"
           >
             {confirming ? 'Confirming...' : 'Still accurate ✓'}
           </button>
           <button
             onClick={handleSave}
             disabled={saving || (content === section.content && visibility === section.visibility)}
-            className="px-3 py-1.5 text-xs bg-accent hover:bg-accent/90 text-white rounded-lg transition-colors disabled:opacity-50"
+            className="px-5 py-2 text-sm bg-accent hover:bg-accent-light text-white font-medium rounded-lg transition-all shadow-soft disabled:opacity-50"
           >
             {saving ? 'Saving...' : 'Save'}
           </button>
