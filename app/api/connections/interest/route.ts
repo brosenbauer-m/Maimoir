@@ -41,7 +41,7 @@ async function getVaultSummary(userId: string): Promise<string> {
 }
 
 export async function POST(request: NextRequest) {
-  const supabase = createClient()
+  const supabase = await createClient()
   const serviceSupabase = createServiceClient()
 
   const {
